@@ -1,0 +1,24 @@
+
+.md-form label{
+    font-size: 24px !important;
+}
+.md-textarea{
+    font-size: 24px !important;
+    height: 25vh !important;
+}
+.align-right{
+    justify-content: flex-end;
+    display: flex;
+}
+.active{
+    transform: translateY(-33px) scale(0.8) !important;
+    color: #33b5e5 !important;
+}
+.md-form input[type=text]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label{
+    color: #33b5e5 !important;
+}
+.md-form.md-bg input[type=text], .md-form.md-bg textarea.md-textarea {
+    background-image: linear-gradient(to bottom, #33b5e5, #33b5e5), linear-gradient(to bottom, #ced4da, #ced4da) !important;
+}
+
+
