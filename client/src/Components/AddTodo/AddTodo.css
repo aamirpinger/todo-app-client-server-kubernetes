@@ -1,20 +1,25 @@
 .add-todo-main{
-    border: 1px solid silver;
+    border: 1px solid var(--silver);
+    box-shadow:  5px 15px 15px rgba(0,0,0,0.65);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .md-form label{
     font-size: 18px !important;
+    color: var(--themeOutlineColor)  !important;
 }
 .md-textarea{
     font-size: 18px !important;
     height: 25vh !important;
+    border-bottom: red !important;
 }
 .align-right{
     justify-content: flex-end;
     display: flex;
 }
 .active{
-    transform: translateY(-33px) scale(0.8) !important;
+    transform: translateY(-27px) scale(0.9) !important;
     color: var(--themeOutlineColor) !important;
 }
 .md-form input[type=text]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label{

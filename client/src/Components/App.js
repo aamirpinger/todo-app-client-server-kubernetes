@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AddTodo from './AddTodo/AddTodo'
 import ListTodo from './ListTodo/ListTodo'
+import Header from './Header/Header'
 import './App.css'
 import { fillTodoRows } from '../utils/Helper'
 
@@ -41,6 +42,7 @@ class App extends Component {
   render() {
     return (
       <div className="app-main">
+        <Header />
         <AddTodo addTodo={this.addTodo} />
         <ListTodo
           todos={this.state.todos}
