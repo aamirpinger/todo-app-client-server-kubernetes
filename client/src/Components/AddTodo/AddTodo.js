@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBInput } from "mdbreact";
 
 import './AddTodo.css'
 class AddTodo extends Component {
     state = {
         title: '',
         description: '',
+        done: false,
+        important: false,
+        titleError: false,
     }
 
+    validateInput = () => {
+        return (!this.state.title) ? false : true
+    }
     handleTitleChange = (e) => {
-        this.setState({ title: e.target.value })
+        this.setState({
+            title: e.target.value,
+            titleError: false
+        })
     }
 
     handleDescriptionChange = (e) => {
@@ -24,13 +33,20 @@ class AddTodo extends Component {
     }
 
     addTodo = () => {
-        this.props.addTodo(this.state)
-        this.resetInput()
+        if (this.validateInput()) {
+            this.props.addTodo(this.state)
+            this.resetInput()
+        }
+        else {
+            this.setState({
+                titleError: true
+            })
+        }
     }
 
     render() {
         return (
-            <MDBContainer>
+            <MDBContainer className="add-todo-main">
                 <MDBRow>
                     <MDBCol>
                         <MDBInput
@@ -38,8 +54,13 @@ class AddTodo extends Component {
                             onChange={this.handleTitleChange}
                             label="ToDo Title"
                             background
-                            size="lg"
+                            size={(this.state.titleError) ? "lg inputErrorDiv" : "lg"}
+                            className={(this.state.titleError) ? "inputError" : ""}
+                            maxLength={100}
                         />
+                        {
+                            (this.state.titleError) && <span className="error-text"> ToDo Title cannot be blank.</span>
+                        }
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -50,13 +71,15 @@ class AddTodo extends Component {
                             type="textarea"
                             label="ToDo Description"
                             background
+                            maxLength={250}
                         />
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol className="align-right">
-                        <MDBBtn outline color="info" onClick={this.resetInput}>Reset</MDBBtn>
-                        <MDBBtn outline color="info" onClick={this.addTodo}>Add</MDBBtn>
+                        <button type="button" onClick={this.resetInput} className="btn btn-outline-info-modified waves-effect">Reset</button>
+                        <button type="button" onClick={this.addTodo} className="btn btn-outline-info-modified waves-effect">Add</button>
+
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

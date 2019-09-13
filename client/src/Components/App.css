@@ -1,11 +1,21 @@
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--themeForeColor);
-    font-size: 24px;
-
+    font-size: 24px;;
 }
 
+.app-main{
+    align-self: center;
+    justify-self: center;
+    margin-top: 150px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
 
 :root {
     --themeForeColor: rgb(83, 78, 78);
+    --themeOutlineColor: rgb(20, 20, 93);
+    --silver:#d9d7d7;
 }

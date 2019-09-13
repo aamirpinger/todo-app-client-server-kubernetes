@@ -1,0 +1,52 @@
+.todo-table-main{
+    margin-top: 100px;
+}
+.primary-color-changed{
+    color: var(--themeOutlineColor) !important;
+}
+
+table th {
+    font-weight: 200;
+    font-size: 18px !important;
+}
+
+li.active{
+    transform: none !important;
+}
+
+.table thead {
+    color: var(--themeForeColor) !important;
+    background-color: var(--silver);
+}
+tbody + thead{
+    display: none;
+  }
+
+  .btn.round-btn{
+    border-radius: 50%;
+    height: 30px;
+    width: 30px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: unset;
+    background: var(--themeOutlineColor) !important;
+  }
+
+  .col-sm-12{
+    overflow-x: auto;
+  }
+
+  .pagination .page-item.active .page-link{
+      background-color: var(--themeOutlineColor) !important;
+  }
+
+  .filled-yellow{
+      color: yellow;
+  }
+
+  .todoRow{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+  }
