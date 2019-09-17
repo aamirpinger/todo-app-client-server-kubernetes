@@ -12,11 +12,11 @@
 .md-textarea{
     font-size: 18px !important;
     height: 25vh !important;
-    border-bottom: red !important;
 }
 .align-right{
     justify-content: flex-end;
     display: flex;
+    margin-bottom: 20px;
 }
 .active{
     transform: translateY(-27px) scale(0.9) !important;
