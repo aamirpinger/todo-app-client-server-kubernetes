@@ -1,0 +1,62 @@
+.login-todo-main{
+    border: 1px solid var(--silver);
+    box-shadow:  5px 15px 15px rgba(0,0,0,0.65);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 30px;
+}
+
+.signup-heading{
+    color: var(--themeOutlineColor);
+    margin-bottom: 40px !important;
+}
+.login-link{
+    color: var(--themeOutlineColor);
+    font-weight: 400;
+    border: 0;
+    background: transparent;
+    outline: 0 !important;
+}
+.login-link:active{
+    outline: 0;
+}
+.login-link:hover{
+    color: var(--themeOutlineColor) !important;
+    font-weight: 600;
+    text-shadow:  5px 15px 15px rgba(0,0,0,0.65);
+}
+
+.md-form.form-lg .prefix ~ label {
+    margin-left: 3.45rem !important;
+}
+
+md-form label, ..login-link-heading{
+    font-size: 18px !important;
+    color: var(--themeOutlineColor)  !important;
+}
+
+.align-center{
+    justify-content: center;
+    display: flex;
+}
+.md-form input[type=text]:focus:not([readonly]){
+    box-shadow: 0 1px 0 0 var(--themeOutlineColor) !important;
+    border-bottom: 1px solid var(--themeOutlineColor) !important;
+}
+
+
+
+.inputError{
+    background-color: #e6eefa !important;
+    /* margin-bottom: 0 !important; */
+}
+
+.inputErrorDiv {
+    margin-bottom: 0 !important;
+}
+.signup-error-text{
+    color: red;
+    font-size: 14px;
+    margin-top: 0;
+    margin-left: 3rem;
+}
