@@ -45,8 +45,6 @@ class Login extends Component {
             this.setState({ [invalidField]: true })
         }
         else {
-
-            // login API to be called here
             login(this.state.email, this.state.password)
                 .then(user => {
                     this.props.login(user)

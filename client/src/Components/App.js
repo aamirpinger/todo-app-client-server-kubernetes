@@ -53,9 +53,9 @@ class App extends Component {
     })
   }
 
-  handleLogin = () => {
+  handleLogin = (user) => {
     this.setState({
-      loggedInUser: "a",
+      loggedInUser: user,
       signup: false
     })
   }
