@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBInput } from 'mdbreact';
 import validate from 'validator'
-
+import { signup } from '../../utils/APICalls'
 import './Signup.css'
 class Signup extends Component {
     state = {
@@ -10,7 +10,9 @@ class Signup extends Component {
         password: '',
         emptyName: false,
         invalidEmail: false,
-        emptyPassword: false
+        emptyPassword: false,
+        signupFailed: false,
+        errMessage: ''
     }
 
     handleNameInput = (e) => {
@@ -34,13 +36,13 @@ class Signup extends Component {
     }
     validate = () => {
         let invalid = false
-        if (this.state.name === '') {
+        if (this.state.name.trim() === '') {
             invalid = "emptyName"
         }
         else if (!validate.isEmail(this.state.email)) {
             invalid = "invalidEmail"
         }
-        else if (this.state.password === "") {
+        else if (this.state.password.trim() === "") {
             invalid = "emptyPassword"
         }
 
@@ -53,7 +55,26 @@ class Signup extends Component {
             this.setState({ [invalidField]: true })
         }
         else {
-            this.props.signupDone()
+            signup(this.state.name, this.state.email, this.state.password)
+                .then(user => {
+                    this.props.signupDone()
+                })
+                .catch(error => {
+                    let err
+                    if (error.data.errmsg) {
+                        err = error.data.errmsg
+                    }
+                    else if (error.data.errors.password) {
+                        err = "Invalid Password, must be atleast 7 letters."
+                    }
+                    else {
+                        err = error.data.message
+                    }
+                    this.setState({
+                        signupFailed: true,
+                        errMessage: err
+                    })
+                })
         }
     }
 
@@ -109,9 +130,12 @@ class Signup extends Component {
                                 size={(this.state.emptyPassword) ? "lg inputErrorDiv" : "lg"}
                                 className={(this.state.emptyPassword) ? "inputError" : ""}
                             />
-                        {
-                            (this.state.emptyPassword) && <span className="signup-error-text">Password cannot be blank.</span>
-                        }
+                            {
+                                (this.state.emptyPassword) && <span className="signup-error-text">Password cannot be blank.</span>
+                            }
+                            {
+                                (this.state.signupFailed) && <span className="signup-error-text signin-bad-response"> Error: {this.state.errMessage}, please try again.</span>
+                            }
                         </div>
                         <div className="text-center">
                             <button

@@ -10,7 +10,12 @@
     font-size: 18px !important;
     color: var(--themeOutlineColor)  !important;
 }
+.signin-bad-response{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
 .align-center{
     justify-content: center;
     display: flex;

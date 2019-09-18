@@ -5,7 +5,7 @@ const routes = express.Router()
 
 
 // User create (signup)
-routes.post('/user/signup', async (req, res) => {
+routes.post('/signup', async (req, res) => {
     const newUser = req.body
     const fieldsToAdd = Object.keys(newUser)
     const fieldsInModel = ['name', 'email', 'password']
@@ -28,7 +28,7 @@ routes.post('/user/signup', async (req, res) => {
 })
 
 // Login user
-routes.post('/user/login', async (req, res) => {
+routes.post('/login', async (req, res) => {
     try {
         const user = await Users.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
@@ -41,7 +41,7 @@ routes.post('/user/login', async (req, res) => {
 })
 
 //logout user
-routes.post('/user/logout', auth, async (req, res) => {
+routes.post('/logout', auth, async (req, res) => {
     try {
         const { user, token } = req
 
