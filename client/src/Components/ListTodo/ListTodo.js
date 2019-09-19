@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBDataTable } from 'mdbreact';
+import { listTodo } from '../../utils/APICalls'
 import './ListTodo.css'
 
 class ListTodo extends Component {
@@ -38,12 +39,22 @@ class ListTodo extends Component {
                 }
 
             ],
-            rows: []
+            rows: [],
+            errMessage: ''
         }
     }
 
 
     componentDidMount() {
+        listTodo()
+            .then(todos => {
+                this.props.initiateTodo(todos)
+            })
+            .catch(error => {
+                this.setState({ errMessage: error.data.message })
+            })
+
+
         this.setState((ps) => ({
             todos: {
                 ...ps.todos,
@@ -59,6 +70,7 @@ class ListTodo extends Component {
             todos: {
                 ...state.todos,
                 rows,
+                errMessage: ''
             }
         }
     }
@@ -66,6 +78,9 @@ class ListTodo extends Component {
     render() {
         return (
             <MDBContainer className="todo-table-main" >
+                {
+                    (this.state.titleError) && <span className="error-text"> ToDo Title cannot be blank.</span>
+                }
                 <MDBRow>
                     <MDBCol>
                         <MDBDataTable

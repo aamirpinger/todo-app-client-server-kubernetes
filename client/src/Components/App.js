@@ -22,6 +22,10 @@ class App extends Component {
     }))
   }
 
+  initiateTodo = (todos) => {
+    this.setState({ todos })
+  }
+
   fillTodoRows = () => fillTodoRows(this.state.todos, this.handleImportant, this.handleDone, this.deleteTodo)
 
   toggleSignup = () => {
@@ -71,6 +75,7 @@ class App extends Component {
       todos: [...ps.todos.splice(0, index), ...ps.todos.splice(1, ps.todos.length)]
     }))
   }
+
   render() {
     const userName = (this.state.loggedInUser) ? this.state.loggedInUser.user.name : ""
     return <div className="app-main">
@@ -83,6 +88,7 @@ class App extends Component {
             <Fragment>
               <AddTodo userName={userName} addTodo={this.addTodo} />
               <ListTodo
+                initiateTodo={this.initiateTodo}
                 todos={this.state.todos}
                 fillTodoRows={this.fillTodoRows}
               />
