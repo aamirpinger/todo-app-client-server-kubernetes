@@ -7,8 +7,7 @@ const ToDosSchema = new mongoose.Schema({
         maxlength: 100,
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

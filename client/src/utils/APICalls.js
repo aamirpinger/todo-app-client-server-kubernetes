@@ -27,7 +27,7 @@ export const login = (email, password) => {
         email,
         password
     }).then(user => {
-        axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+        axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${user.data.token}`;
         return user.data
     })
 }
@@ -39,5 +39,20 @@ export const signup = (name, email, password) => {
         password
     }).then(user => {
         return user.data
+    })
+}
+
+export const addTodo = (title, description) => {
+    return axiosInstance.post('/add', {
+        title,
+        description
+    }).then(todo => {
+        return todo.data
+    })
+}
+
+export const listTodo = () => {
+    return axiosInstance.post('/list').then(todos => {
+        return todos.data
     })
 }

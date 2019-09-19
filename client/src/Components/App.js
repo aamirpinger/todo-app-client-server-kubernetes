@@ -72,6 +72,7 @@ class App extends Component {
     }))
   }
   render() {
+    const userName = (this.state.loggedInUser) ? this.state.loggedInUser.user.name : ""
     return <div className="app-main">
       <Header />
       {(this.state.signup)
@@ -80,7 +81,7 @@ class App extends Component {
           ? <Login login={this.handleLogin} signup={this.toggleSignup} />
           : (
             <Fragment>
-              <AddTodo addTodo={this.addTodo} />
+              <AddTodo userName={userName} addTodo={this.addTodo} />
               <ListTodo
                 todos={this.state.todos}
                 fillTodoRows={this.fillTodoRows}

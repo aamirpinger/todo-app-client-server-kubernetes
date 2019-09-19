@@ -3,8 +3,9 @@ const ToDos = require('../models/Todos-model')
 const auth = require('../middlewares/auth')
 const routes = express.Router()
 
-routes.post('/todo/add', auth, async (req, res) => {
+routes.post('/add', auth, async (req, res) => {
     const newTodo = req.body
+
     const fieldsToAdd = Object.keys(newTodo)
     const fieldsInModel = ['title', 'description']
     const isAdditionAllowed = fieldsToAdd.every((field) => fieldsInModel.includes(field))
@@ -28,7 +29,7 @@ routes.post('/todo/add', auth, async (req, res) => {
     }
 })
 
-routes.get('/todo/list', auth, async (req, res) => {
+routes.get('/list', auth, async (req, res) => {
     try {
         const todos = await ToDos.find({
             user: req.user._id
@@ -41,18 +42,6 @@ routes.get('/todo/list', auth, async (req, res) => {
     }
 })
 
-
-routes.get('*', async (req, res) => {
-    try {
-
-        res.status(404).send({
-            error: "Invalid endpoint."
-        })
-    }
-    catch (e) {
-        res.status(500).send
-    }
-})
 
 module.exports = routes
 

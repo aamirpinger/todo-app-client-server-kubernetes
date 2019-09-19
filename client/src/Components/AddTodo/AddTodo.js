@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBInput } from "mdbreact";
-
+import { addTodo } from '../../utils/APICalls'
 import './AddTodo.css'
+
 class AddTodo extends Component {
     state = {
         title: '',
@@ -9,6 +10,7 @@ class AddTodo extends Component {
         done: false,
         important: false,
         titleError: false,
+        errMessage: ''
     }
 
     validateInput = () => {
@@ -32,10 +34,23 @@ class AddTodo extends Component {
         })
     }
 
-    addTodo = () => {
+    handleAddTodo = () => {
+        this.setState({ errMessage: '' })
+
         if (this.validateInput()) {
-            this.props.addTodo(this.state)
-            this.resetInput()
+            addTodo(this.state.title, this.state.description)
+                .then(todo => {
+                    this.props.addTodo({
+                        title: this.state.title,
+                        description: this.state.description,
+                        important: false,
+                        done: false
+                    })
+                    this.resetInput()
+                })
+                .catch(error => {
+                    this.setState({ errMessage: error.data.message })
+                })
         }
         else {
             this.setState({
@@ -45,8 +60,14 @@ class AddTodo extends Component {
     }
 
     render() {
+        const { userName } = this.props
         return (
             <MDBContainer className="add-todo-main">
+                <MDBRow>
+                    <MDBCol>
+                        <span className="todo-welcome" >{`Welcome ${userName}`}</span>
+                    </MDBCol>
+                </MDBRow>
                 <MDBRow>
                     <MDBCol>
                         <MDBInput
@@ -78,7 +99,7 @@ class AddTodo extends Component {
                 <MDBRow>
                     <MDBCol className="align-right">
                         <button type="button" onClick={this.resetInput} className="btn btn-outline-info-modified waves-effect">Reset</button>
-                        <button type="button" onClick={this.addTodo} className="btn btn-outline-info-modified waves-effect">Add</button>
+                        <button type="button" onClick={this.handleAddTodo} className="btn btn-outline-info-modified waves-effect">Add</button>
 
                     </MDBCol>
                 </MDBRow>
