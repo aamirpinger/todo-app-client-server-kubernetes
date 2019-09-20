@@ -5,7 +5,7 @@ import Header from './Header/Header'
 import Login from './Login/Login'
 import Signup from './Signup/Signup'
 import './App.css'
-import { updateTodo, deleteTodo } from '../utils/APICalls'
+import { updateTodo, deleteTodo, signout } from '../utils/APICalls'
 import { fillTodoRows } from '../utils/Helper'
 
 class App extends Component {
@@ -97,6 +97,21 @@ class App extends Component {
       })
   }
 
+  handleSignout = () => {
+    signout()
+      .then(user => {
+        this.setState({
+          loggedInUser: '',
+          token: '',
+          todos: [],
+          signup: false
+        })
+      })
+      .catch(error => {
+        this.setState({ errMessage: error })
+      })
+  }
+
   render() {
     const userName = (this.state.loggedInUser) ? this.state.loggedInUser.user.name : ""
     return <div className="app-main">
@@ -107,7 +122,13 @@ class App extends Component {
           ? <Login login={this.handleLogin} signup={this.toggleSignup} />
           : (
             <Fragment>
-              <AddTodo userName={userName} addTodo={this.addTodo} />
+
+              <AddTodo
+                userName={userName}
+                addTodo={this.addTodo}
+                signout={this.handleSignout}
+              />
+
               <ListTodo
                 initiateTodo={this.initiateTodo}
                 todos={this.state.todos}
@@ -116,6 +137,7 @@ class App extends Component {
                 handleDone={this.handleDone}
                 deleteTodo={this.handleDelete}
               />
+
             </Fragment>
           )
       }

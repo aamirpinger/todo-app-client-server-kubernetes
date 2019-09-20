@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBInput } from "mdbreact";
 import { addTodo } from '../../utils/APICalls'
+import WelcomeHeader from '../WelcomeHeader/WelcomeHeader'
 import './AddTodo.css'
 
 class AddTodo extends Component {
@@ -44,7 +45,8 @@ class AddTodo extends Component {
                         title: this.state.title,
                         description: this.state.description,
                         important: false,
-                        done: false
+                        done: false,
+                        _id: todo.todo._id
                     })
                     this.resetInput()
                 })
@@ -60,14 +62,10 @@ class AddTodo extends Component {
     }
 
     render() {
-        const { userName } = this.props
+        const { userName, signout } = this.props
         return (
             <MDBContainer className="add-todo-main">
-                <MDBRow>
-                    <MDBCol>
-                        <span className="todo-welcome" >{`Welcome ${userName}`}</span>
-                    </MDBCol>
-                </MDBRow>
+                <WelcomeHeader userName={userName} signout={signout} />
                 <MDBRow>
                     <MDBCol>
                         <MDBInput

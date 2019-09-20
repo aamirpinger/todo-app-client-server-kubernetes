@@ -66,7 +66,7 @@ class Login extends Component {
                         <p className="h5 text-center login-heading">Sign in</p>
                         <div className="grey-text">
                             <MDBInput
-                                label="Type your email"
+                                label="Email:"
                                 icon="envelope"
                                 group
                                 type="email"
@@ -82,7 +82,7 @@ class Login extends Component {
                                 (this.state.invalidEmail) && <span className="signup-error-text"> Please type valid email address.</span>
                             }
                             <MDBInput
-                                label="Type your password"
+                                label="Password: "
                                 icon="lock"
                                 group
                                 type="password"

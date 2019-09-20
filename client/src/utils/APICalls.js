@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-export const logout = () => {
+export const signout = () => {
     return axiosInstance.post(process.env.REACT_APP_baseAPIURL + '/logout').then(user => {
         delete axiosInstance.defaults.headers.common["Authorization"];
         return user.data
