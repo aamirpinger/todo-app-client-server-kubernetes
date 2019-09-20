@@ -43,7 +43,7 @@ export const signup = (name, email, password) => {
 }
 
 export const addTodo = (title, description) => {
-    return axiosInstance.post('/add', {
+    return axiosInstance.post('/todo/add', {
         title,
         description
     }).then(todo => {
@@ -53,8 +53,37 @@ export const addTodo = (title, description) => {
 
 export const listTodo = () => {
     //I have used post instead of get, read https://blog.teamtreehouse.com/the-definitive-guide-to-get-vs-post
-    return axiosInstance.post('/list').then(todos => {
+    return axiosInstance.post('/todo/list').then(todos => {
         return todos.data
     })
 }
 
+
+export const updateTodo = (_id, important = null, done = null) => {
+    //I have used post instead of get, read https://blog.teamtreehouse.com/the-definitive-guide-to-get-vs-post
+    const fieldsToUpdate = {
+        _id
+    }
+
+    if (important !== null) {
+        fieldsToUpdate.important = important
+    }
+    if (done !== null) {
+        fieldsToUpdate.done = done
+    }
+    return axiosInstance.patch('/todo/update', fieldsToUpdate).then(todo => {
+        return todo.data
+    })
+}
+
+
+export const deleteTodo = (_id) => {
+    //I have used post instead of get, read https://blog.teamtreehouse.com/the-definitive-guide-to-get-vs-post
+    return axiosInstance.delete('/todo/delete', {
+        data: {
+            _id,
+        }
+    }).then(todo => {
+        return todo
+    })
+}

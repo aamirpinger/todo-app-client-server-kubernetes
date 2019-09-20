@@ -9,6 +9,14 @@ const ToDosSchema = new mongoose.Schema({
     description: {
         type: String
     },
+    important: {
+        type: Boolean,
+        default: false
+    },
+    done: {
+        type: Boolean,
+        default: false
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

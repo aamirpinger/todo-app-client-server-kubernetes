@@ -5,7 +5,7 @@ import Header from './Header/Header'
 import Login from './Login/Login'
 import Signup from './Signup/Signup'
 import './App.css'
-
+import { updateTodo, deleteTodo } from '../utils/APICalls'
 import { fillTodoRows } from '../utils/Helper'
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
     this.setState({ todos })
   }
 
-  fillTodoRows = () => fillTodoRows(this.state.todos, this.handleImportant, this.handleDone, this.deleteTodo)
+  fillTodoRows = () => fillTodoRows(this.state.todos, this.handleImportant, this.handleDone, this.handleDelete)
 
   toggleSignup = () => {
     this.setState((ps) => (
@@ -34,20 +34,35 @@ class App extends Component {
     ))
   }
 
-  handleImportant = (index) => {
-    this.setState((ps) => {
-      const newState = ps
-      newState.todos[index].important = !newState.todos[index].important
-      return newState
-    })
+
+
+
+  handleImportant = (index, id) => {
+    updateTodo(id, !this.state.todos[index].important)
+      .then(todo => {
+        this.setState((ps) => {
+          const newState = ps
+          newState.todos[index].important = !newState.todos[index].important
+          return newState
+        })
+      })
+      .catch(error => {
+        this.setState({ errMessage: error })
+      })
   }
 
-  handleDone = (index) => {
-    this.setState((ps) => {
-      const newState = ps
-      newState.todos[index].done = !newState.todos[index].done
-      return newState
-    })
+  handleDone = (index, id) => {
+    updateTodo(id, null, !this.state.todos[index].done)
+      .then(todo => {
+        this.setState((ps) => {
+          const newState = ps
+          newState.todos[index].done = !newState.todos[index].done
+          return newState
+        })
+      })
+      .catch(error => {
+        this.setState({ errMessage: error })
+      })
   }
 
   logout = () => {
@@ -70,10 +85,16 @@ class App extends Component {
     })
   }
 
-  deleteTodo = (index) => {
-    this.setState((ps) => ({
-      todos: [...ps.todos.splice(0, index), ...ps.todos.splice(1, ps.todos.length)]
-    }))
+  handleDelete = (index, id) => {
+    deleteTodo(id)
+      .then(todo => {
+        this.setState((ps) => ({
+          todos: [...ps.todos.splice(0, index), ...ps.todos.splice(1, ps.todos.length)]
+        }))
+      })
+      .catch(error => {
+        this.setState({ errMessage: error })
+      })
   }
 
   render() {
@@ -91,6 +112,9 @@ class App extends Component {
                 initiateTodo={this.initiateTodo}
                 todos={this.state.todos}
                 fillTodoRows={this.fillTodoRows}
+                handleImportant={this.handleImportant}
+                handleDone={this.handleDone}
+                deleteTodo={this.handleDelete}
               />
             </Fragment>
           )

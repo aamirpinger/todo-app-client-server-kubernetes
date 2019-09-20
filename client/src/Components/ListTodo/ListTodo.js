@@ -54,7 +54,6 @@ class ListTodo extends Component {
                 this.setState({ errMessage: error.data.message })
             })
 
-
         this.setState((ps) => ({
             todos: {
                 ...ps.todos,
@@ -66,6 +65,7 @@ class ListTodo extends Component {
 
     static getDerivedStateFromProps(props, state) {
         const rows = props.fillTodoRows()
+
         return {
             todos: {
                 ...state.todos,

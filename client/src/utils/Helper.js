@@ -12,7 +12,7 @@ export const fillTodoRows = (todoRecords, handleImportant, handleDone, deleteTod
                 <MDBTooltip
                     placement="top"
                 >
-                    <MDBBtn tag="a" floating className="round-btn" onClick={() => handleImportant(index)} >
+                    <MDBBtn tag="a" floating className="round-btn" onClick={() => handleImportant(index, rec._id)} >
                         <MDBIcon icon="star" className={(rec.important) ? "filled-yellow" : ""} />
                     </MDBBtn>
                     <div>Mark Important</div>
@@ -22,7 +22,7 @@ export const fillTodoRows = (todoRecords, handleImportant, handleDone, deleteTod
                 <MDBTooltip
                     placement="top"
                 >
-                    <MDBBtn tag="a" floating className="round-btn" onClick={() => handleDone(index)} >
+                    <MDBBtn tag="a" floating className="round-btn" onClick={() => handleDone(index, rec._id)} >
                         <MDBIcon icon="check" className={(rec.done) ? "filled-yellow" : ""} />
                     </MDBBtn>
                     <div>Done</div>
@@ -33,7 +33,7 @@ export const fillTodoRows = (todoRecords, handleImportant, handleDone, deleteTod
                 <MDBTooltip
                     placement="top"
                 >
-                    <MDBBtn tag="a" floating className="round-btn" onClick={() => deleteTodo(index)} >
+                    <MDBBtn tag="a" floating className="round-btn" onClick={() => deleteTodo(index, rec._id)} >
                         <MDBIcon icon="trash-alt" />
                     </MDBBtn>
                     <div>Remove</div>

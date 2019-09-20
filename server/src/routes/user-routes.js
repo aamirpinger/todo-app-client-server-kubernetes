@@ -29,8 +29,10 @@ routes.post('/signup', async (req, res) => {
 
 // Login user
 routes.post('/login', async (req, res) => {
+
     try {
         const user = await Users.findByCredentials(req.body.email, req.body.password)
+
         const token = await user.generateAuthToken()
 
         res.send({ user, token })
