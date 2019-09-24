@@ -31,6 +31,7 @@ routes.post('/todo/add', auth, async (req, res) => {
 
 routes.post('/todo/list', auth, async (req, res) => {
     try {
+
         const todos = await ToDos.find({
             user: req.user._id
         })

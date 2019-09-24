@@ -39,6 +39,8 @@ class Login extends Component {
         return invalid
     }
 
+
+
     handleSubmit = () => {
         const invalidField = this.validate()
         if (invalidField) {
@@ -50,6 +52,8 @@ class Login extends Component {
                     this.props.login(user)
                 })
                 .catch(error => {
+                    console.log(error)
+
                     if (error.status === 400) {
                         this.setState({ loginFailed: true })
                     }

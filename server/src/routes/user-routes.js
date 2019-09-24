@@ -27,15 +27,34 @@ routes.post('/signup', async (req, res) => {
     }
 })
 
+// check if previously loggeding
+routes.post('/init', auth, async (req, res) => {
+    try {
+        const cookieOptions = {
+            httpOnly: true,
+        };
+
+        const { token, user } = req
+        if (token && user) {
+            res.cookie('todo-jt', req.token, cookieOptions).send({ user, token })
+        }
+    } catch (e) {
+        res.status(400).send()
+    }
+})
+
 // Login user
 routes.post('/login', async (req, res) => {
-
     try {
+        const cookieOptions = {
+            httpOnly: true,
+        };
+
         const user = await Users.findByCredentials(req.body.email, req.body.password)
 
         const token = await user.generateAuthToken()
 
-        res.send({ user, token })
+        res.cookie('todo-jt', token, cookieOptions).send({ user, token })
 
     } catch (e) {
         res.status(400).send()
@@ -49,6 +68,8 @@ routes.post('/logout', auth, async (req, res) => {
 
         user.tokens = user.tokens.filter((t) => t.token !== token)
         await user.save()
+
+        res.clearCookie('todo-jt')
 
         res.send()
     } catch (e) {

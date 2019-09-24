@@ -4,11 +4,20 @@ require('./db/mongoose')
 const todoRoutes = require('./routes/todo-routes')
 const userRoutes = require('./routes/user-routes')
 const errorRoutes = require('./routes/error-routes')
+let cookieParser = require('cookie-parser')
+
 const app = express()
 const port = process.env.PORT || 5000
 
+const corsOptions = {
+    origin: process.env.CLIENT,
+    credentials: true
+}
+
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
+
+app.use(cookieParser())
 
 app.use(todoRoutes)
 app.use(userRoutes)

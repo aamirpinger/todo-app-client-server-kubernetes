@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import AddTodo from './AddTodo/AddTodo'
 import ListTodo from './ListTodo/ListTodo'
+import PageLoader from './PageLoader/PageLoader'
 import Header from './Header/Header'
 import Login from './Login/Login'
+import { init } from '../utils/APICalls'
 import Signup from './Signup/Signup'
 import './App.css'
 import { updateTodo, deleteTodo, signout } from '../utils/APICalls'
@@ -10,10 +12,24 @@ import { fillTodoRows } from '../utils/Helper'
 
 class App extends Component {
   state = {
+    init: true,
     loggedInUser: '',
     token: '',
     todos: [],
     signup: false
+  }
+
+
+  componentDidMount() {
+    init()
+      .then(user => {
+        this.handleLogin(user)
+      })
+      .catch(error => {
+        this.setState({
+          init: false
+        })
+      })
   }
 
   addTodo = (newTodo) => {
@@ -33,8 +49,6 @@ class App extends Component {
       { signup: !ps.signup }
     ))
   }
-
-
 
 
   handleImportant = (index, id) => {
@@ -75,7 +89,8 @@ class App extends Component {
   handleLogin = (user) => {
     this.setState({
       loggedInUser: user,
-      signup: false
+      signup: false,
+      init: false
     })
   }
 
@@ -116,30 +131,32 @@ class App extends Component {
     const userName = (this.state.loggedInUser) ? this.state.loggedInUser.user.name : ""
     return <div className="app-main">
       <Header />
-      {(this.state.signup)
-        ? <Signup backToLogin={this.backToLogin} signupDone={this.toggleSignup} />
-        : (!this.state.loggedInUser)
-          ? <Login login={this.handleLogin} signup={this.toggleSignup} />
-          : (
-            <Fragment>
+      {(this.state.init) ?
+        <PageLoader />
+        : (this.state.signup)
+          ? <Signup backToLogin={this.backToLogin} signupDone={this.toggleSignup} />
+          : (!this.state.loggedInUser)
+            ? <Login login={this.handleLogin} signup={this.toggleSignup} />
+            : (
+              <Fragment>
 
-              <AddTodo
-                userName={userName}
-                addTodo={this.addTodo}
-                signout={this.handleSignout}
-              />
+                <AddTodo
+                  userName={userName}
+                  addTodo={this.addTodo}
+                  signout={this.handleSignout}
+                />
 
-              <ListTodo
-                initiateTodo={this.initiateTodo}
-                todos={this.state.todos}
-                fillTodoRows={this.fillTodoRows}
-                handleImportant={this.handleImportant}
-                handleDone={this.handleDone}
-                deleteTodo={this.handleDelete}
-              />
+                <ListTodo
+                  initiateTodo={this.initiateTodo}
+                  todos={this.state.todos}
+                  fillTodoRows={this.fillTodoRows}
+                  handleImportant={this.handleImportant}
+                  handleDone={this.handleDone}
+                  deleteTodo={this.handleDelete}
+                />
 
-            </Fragment>
-          )
+              </Fragment>
+            )
       }
     </div>
 

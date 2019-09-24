@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_baseAPIURL
+    baseURL: process.env.REACT_APP_baseAPIURL,
+    withCredentials: true,
 });
 
 axiosInstance.interceptors.response.use(
@@ -16,18 +17,24 @@ axiosInstance.interceptors.response.use(
 
 export const signout = () => {
     return axiosInstance.post(process.env.REACT_APP_baseAPIURL + '/logout').then(user => {
-        delete axiosInstance.defaults.headers.common["Authorization"];
+        // delete axiosInstance.defaults.headers.common["Authorization"];
         return user.data
     })
 }
 
+
+export const init = () => {
+    return axiosInstance.post('/init').then(user => {
+        return user.data
+    })
+}
 
 export const login = (email, password) => {
     return axiosInstance.post('/login', {
         email,
         password
     }).then(user => {
-        axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${user.data.token}`;
+        // axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${user.data.token}`;
         return user.data
     })
 }

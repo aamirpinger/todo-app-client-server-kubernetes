@@ -1,0 +1,7 @@
+.pageLoader-main circle,line{
+    stroke: var(--themeOutlineColor);
+}
+
+.pageLoader-main{
+    margin: 20vh;
+}
