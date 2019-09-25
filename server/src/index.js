@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const helmet = require('helmet')
 require('./db/mongoose')
 const todoRoutes = require('./routes/todo-routes')
 const userRoutes = require('./routes/user-routes')
@@ -18,6 +19,13 @@ app.use(express.json())
 app.use(cors(corsOptions))
 
 app.use(cookieParser())
+
+app.use(helmet())
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+    }
+}))
 
 app.use(todoRoutes)
 app.use(userRoutes)
