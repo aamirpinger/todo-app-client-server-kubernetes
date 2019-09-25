@@ -10,7 +10,8 @@ class Login extends Component {
         password: 'aamir123',
         invalidEmail: false,
         emptyPassword: false,
-        loginFailed: false
+        loginFailed: false,
+        errMsg: ''
     }
 
 
@@ -43,6 +44,7 @@ class Login extends Component {
 
     handleSubmit = () => {
         const invalidField = this.validate()
+        let errMsg
         if (invalidField) {
             this.setState({ [invalidField]: true })
         }
@@ -52,16 +54,22 @@ class Login extends Component {
                     this.props.login(user)
                 })
                 .catch(error => {
-                    console.log(error)
-
-                    if (error.status === 400) {
-                        this.setState({ loginFailed: true })
+                    if (error && error.status && error.status === 400) {
+                        errMsg = "Incorrect username/password, please try again."
                     }
+                    else {
+                        errMsg = "Something went wrong, please try again later."
+                    }
+                    this.setState({
+                        loginFailed: true,
+                        errMsg
+                    })
                 })
         }
     }
 
     render() {
+        const { errMsg } = this.state
         const { signup } = this.props
         return (
             <MDBContainer className="login-todo-main">
@@ -100,7 +108,7 @@ class Login extends Component {
                                 (this.state.emptyPassword) && <span className="signup-error-text">Password cannot be blank.</span>
                             }
                             {
-                                (this.state.loginFailed) && <span className="signup-error-text signin-bad-response"> Incorrect username/password, please try again.</span>
+                                (this.state.loginFailed) && <span className="signup-error-text signin-bad-response"> {errMsg}</span>
                             }
                         </div>
                         <div className="text-center">
