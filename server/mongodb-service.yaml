@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: todo-mongodb
+  name: todo-mongo-service
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: todo-mongodb

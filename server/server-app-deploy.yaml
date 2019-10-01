@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-server-app-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-server-app
+  template:
+    metadata:
+      labels:
+        app: todo-server-app
+    spec:
+      containers:
+      - image: todo-server-kubernetes-app:latest
+        name: container1
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: server-side-configs
+        - secretRef:
+            name: server-side-secrets
