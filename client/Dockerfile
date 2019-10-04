@@ -10,7 +10,7 @@ COPY ./public ./public
 
 COPY ./src ./src
 
-ENV REACT_APP_baseAPIURL=http://todo-backend-service:5000
+ENV REACT_APP_baseAPIURL=<backend-app-service-ip>:<port>
 
 RUN yarn build
 

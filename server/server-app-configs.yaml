@@ -4,5 +4,5 @@ metadata:
   name: server-side-configs
 data:
   PORT: "5000"
-  CLIENT: http://todo-client-service.default
+  CLIENT: <front-end-app-service-ip>:<port>
   MONGODB_URL: mongodb://todo-mongo-service:27017/todo-k8s
